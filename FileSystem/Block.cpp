@@ -3,7 +3,7 @@
 Block::Block()
 {
 	for (int i = 0; i < BLOCKSIZE; i++) {
-		data[i] = ' ';
+		data[i] = 0;
 	}
 }
 
@@ -38,7 +38,7 @@ void Block::showData()
 void Block::clear()
 {
 	for (int i = 0; i < BLOCKSIZE; i++) {
-		data[i] = '1';
+		data[i] = ' ';
 	}
 }
 

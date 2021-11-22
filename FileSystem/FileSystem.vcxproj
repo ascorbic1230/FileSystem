@@ -142,7 +142,6 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Cluster.cpp" />
     <ClCompile Include="Entry.cpp" />
-    <ClCompile Include="FAT.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SuperBlock.cpp" />
     <ClCompile Include="Volume.cpp" />
@@ -151,7 +150,6 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cluster.h" />
     <ClInclude Include="Entry.h" />
-    <ClInclude Include="FAT.h" />
     <ClInclude Include="SuperBlock.h" />
     <ClInclude Include="Volume.h" />
   </ItemGroup>
