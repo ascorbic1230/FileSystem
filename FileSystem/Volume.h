@@ -2,10 +2,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Block.h"
 #include "SuperBlock.h"
-#include "FAT.h"
 #include <iostream>
 #include <fstream>
-#include <vector>
 
 using namespace std;
 

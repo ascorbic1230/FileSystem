@@ -23,7 +23,7 @@ SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, 
 	}
 
 	while (i < 10) {
-		this->name[i] = ' ';
+		this->name[i] = 0;
 		i++;
 	}
 

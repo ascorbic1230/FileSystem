@@ -23,7 +23,7 @@ bool Volume::createVolume()
 	char fileName[15];
 	char* name = superBlock->getNameVolume();
 	int i = 0;
-	while (i < 10 && name[i] != ' ') {
+	while (i < 10 && name[i] != 0) {
 		fileName[i] = name[i];
 		i++;
 	}
@@ -31,14 +31,14 @@ bool Volume::createVolume()
 	strcat(fileName, ".dat");
 
 	// Tạo volume là 1 tập tin volume_name.dat
-	fstream volume(fileName, ios::out | ios::binary);
+	fstream volume(fileName, ios::in | ios::out | ios::binary);
 
 	if (volume) {
 		// Tạo volume có kích thước 1GB = 1 000 000 000 bytes
 		volume.seekp(0);
 		char data[10000];
 		for (int i = 0; i < 10000; i++) {
-			data[i] = ' ';
+			data[i] = 0;
 		}
 		for (int i = 0; i < 10000; i++) {			// Kích thước test 100 000 000 bytes
 			volume.write(data, 10000);
@@ -108,7 +108,6 @@ void Volume::writeSuperBlock()
 		block.setDataAt((indexEntryCluster >> (8 * (31 - offset))) & 0xFF, offset);
 		offset++;
 	}
-
 	writeBlock(block, 0);
 }
 
@@ -121,7 +120,7 @@ void Volume::writeFAT()
 	while (i < numBlocksOfFAT) {
 		Block block;
 		for (int j = 0; j < 128; j++) {
-			int value = 1234567;
+			int value = 0;
 			block.setDataAt((value >> 24) & 0xFF, j * 4);
 			block.setDataAt((value >> 16) & 0xFF, j * 4 + 1);
 			block.setDataAt((value >> 8) & 0xFF, j * 4 + 2);
@@ -138,7 +137,6 @@ void Volume::writeFAT()
 
 bool Volume::writeBlock(Block& block, int index)
 {
-	cout << index << endl;
 	// Lấy tên volume
 	char fileName[15];
 	char* name = superBlock->getNameVolume();
@@ -151,11 +149,15 @@ bool Volume::writeBlock(Block& block, int index)
 	strcat(fileName, ".dat");
 
 	// Mở volume
-	fstream volume(fileName, ios::out | ios::binary);
+	fstream volume(fileName, ios::in | ios::out | ios::binary);
 	if (volume) {
-		streampos pos = (streampos) 512 * index;
-		volume.seekp(pos);
-		volume.write(block.getData(), 512);
+		int pos = 512 * index;
+		volume.seekp(pos, volume.beg);
+		char c;
+		for (int i = 0; i < 512; i++) {
+			c = block.getDataAt(i);
+			volume << c;
+		}
 
 		volume.close();
 		return true;
@@ -180,14 +182,14 @@ void Volume::readBlock(Block& block, int index)
 	strcat(fileName, ".dat");
 
 	// Mở volume
-	fstream volume(fileName, ios::out | ios::binary);
+	fstream volume(fileName, ios::in | ios::out | ios::binary);
 
 	if (volume) {
-		streampos pos = (streampos)block.getBlockSize() * index;
-		volume.seekg(pos);
+		int pos = 512 * index;
+		volume.seekg(pos, volume.beg);
 		char c;
-		for (int i = 0; i < block.getBlockSize(); i++) {
-			volume.read(&c, 1);
+		for (int i = 0; i < 512; i++) {
+			volume >> c;
 			block.setDataAt(c, i);
 		}
 
@@ -204,8 +206,8 @@ void Volume::showVolumeInfo()
 	cout << "So byte trong 1 block: " << superBlock->getBytesPerBlock() << endl;
 	cout << "So block trong 1 cluster: " << (int) superBlock->getBlocksPerCluster() << endl;
 	cout << "So block trong Super Block: " << (int) superBlock->getNumBlocksOfSuperBlock() << endl;
-	cout << "So Block trong FAT: " << superBlock->getNumBlocksOfFAT() << endl;
-	cout << "So block trong Data: " << superBlock->getNumCluster() << endl;
+	cout << "So block trong FAT: " << superBlock->getNumBlocksOfFAT() << endl;
+	cout << "So clusters trong Data: " << superBlock->getNumCluster() << endl;
 	cout << "Kich thuoc volume (bytes): " << superBlock->getSizeOfVolume() << endl;
 	cout << "So file trong volume: " << superBlock->getNumOfEntry() << endl;
 	cout << "Block dau tien luu entry: " << superBlock->getIndexEntryCluster() << endl;
