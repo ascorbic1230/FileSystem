@@ -1,4 +1,4 @@
-#include "Block.h"
+﻿#include "Block.h"
 
 Block::Block()
 {
@@ -38,15 +38,51 @@ void Block::showData()
 void Block::clear()
 {
 	for (int i = 0; i < BLOCKSIZE; i++) {
-		data[i] = ' ';
+		data[i] = 0;
 	}
 }
 
-Block Block::operator=(Block b)
+
+void readBlock(string volumeName, Block& block, int index)
 {
-	for (int i = 0; i < getBlockSize(); i++) {
-		this->data[i] = b.data[i];
+	volumeName += ".dat";
+	// Mở volume
+	fstream volume(volumeName, ios::in | ios::binary);
+
+	if (volume) {
+		int pos = 512 * index;
+		volume.seekg(pos, volume.beg);
+		char c;
+		for (int i = 0; i < 512; i++) {
+			volume >> c;
+			block.data[i] = c;
+		}
+
+		volume.close();
 	}
-	return (*this);
+	else {
+		cout << "Khong mo dc volume";
+	}
+}
+
+void writeBlock(string volumeName, Block& block, int index)
+{
+	volumeName += ".dat";
+	// Mở volume
+	fstream volume(volumeName, ios::out | ios::binary);
+	if (volume) {
+		int pos = 512 * index;
+		volume.seekp(pos, volume.beg);
+		char c;
+		for (int i = 0; i < 512; i++) {
+			c = block.data[i];
+			volume << c;
+		}
+
+		volume.close();
+	}
+	else {
+		cout << "Khong mo dc volume";
+	}
 }
 

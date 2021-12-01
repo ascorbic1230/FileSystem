@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #define BLOCKSIZE 512
@@ -15,6 +16,8 @@ public:
 	int getBlockSize();
 	void showData();
 	void clear();
-	Block operator=(Block b);
+
+	friend void readBlock(string volumeName, Block& block, int index);
+	friend void writeBlock(string volumeName, Block& block, int index);
 };
 

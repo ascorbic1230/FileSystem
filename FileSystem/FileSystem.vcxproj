@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Cluster.cpp" />
+    <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SuperBlock.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cluster.h" />
+    <ClInclude Include="DateTime.h" />
     <ClInclude Include="Entry.h" />
     <ClInclude Include="SuperBlock.h" />
     <ClInclude Include="Volume.h" />
