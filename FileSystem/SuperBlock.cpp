@@ -3,7 +3,10 @@
 SuperBlock::SuperBlock()
 {
 	for (int i = 0; i < 10; i++) {
-		name[i] = ' ';
+		name[i] = 0;
+	}
+	for (int i = 0; i < 10; i++) {
+		password[i] = 0;
 	}
 	bytesPerBlock = 0;
 	blocksPerCluster = 0;
@@ -15,7 +18,7 @@ SuperBlock::SuperBlock()
 	indexEntryCluster = 0;
 }
 
-SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, char numBlocksOfSuperBlock, short numBlocksOfFAT, int numCluster, unsigned int sizeOfVolume, int numOfEntry, int indexEntryCluster)
+SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, char numBlocksOfSuperBlock, short numBlocksOfFAT, int numCluster, unsigned int sizeOfVolume, int numOfEntry, int indexEntryCluster, string password)
 {
 	int i;
 	for (i = 0; i < name.size(); i++) {
@@ -24,6 +27,17 @@ SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, 
 
 	while (i < 10) {
 		this->name[i] = 0;
+		i++;
+	}
+
+	i = 0;
+	while (i < password.size()) {
+		this->password[i] = password[i];
+		i++;
+	}
+
+	while (i < 10) {
+		this->password[i] = 0;
 		i++;
 	}
 
@@ -37,10 +51,16 @@ SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, 
 	this->indexEntryCluster = indexEntryCluster;
 }
 
-// Lấy tên của volume
 char* SuperBlock::getNameVolume()
 {
 	return name;
+}
+
+void SuperBlock::setNameVolume(char* name)
+{
+	for (int i = 0; i < 10; i++) {
+		this->name[i] = name[i];
+	}
 }
 
 short SuperBlock::getBytesPerBlock()
@@ -48,10 +68,19 @@ short SuperBlock::getBytesPerBlock()
 	return bytesPerBlock;
 }
 
-// Trả về số block của một cluster
+void SuperBlock::setBytesPerBlock(short bytesPerBlock)
+{
+	this->bytesPerBlock = bytesPerBlock;
+}
+
 char SuperBlock::getBlocksPerCluster()
 {
 	return blocksPerCluster;
+}
+
+void SuperBlock::setBlocksPerCluster(char blocksPerCluster)
+{
+	this->blocksPerCluster = blocksPerCluster;
 }
 
 char SuperBlock::getNumBlocksOfSuperBlock()
@@ -59,9 +88,19 @@ char SuperBlock::getNumBlocksOfSuperBlock()
 	return numBlocksOfSuperBlock;
 }
 
+void SuperBlock::setNumBlocksOfSuperBlock(char numBlocksOfSuperBlock)
+{
+	this->numBlocksOfSuperBlock = numBlocksOfSuperBlock;
+}
+
 short SuperBlock::getNumBlocksOfFAT()
 {
 	return numBlocksOfFAT;
+}
+
+void SuperBlock::setNumBlocksOfFAT(short numBlocksOfFAT)
+{
+	this->numBlocksOfFAT = numBlocksOfFAT;
 }
 
 int SuperBlock::getNumCluster()
@@ -69,10 +108,19 @@ int SuperBlock::getNumCluster()
 	return numCluster;
 }
 
-// Trả về kích thước lưu trữ của volume (bytes)
+void SuperBlock::setNumCluster(int numCluster)
+{
+	this->numCluster = numCluster;
+}
+
 unsigned int SuperBlock::getSizeOfVolume()
 {
 	return sizeOfVolume;
+}
+
+void SuperBlock::setSizeOfVolume(unsigned int sizeOfVolume)
+{
+	this->sizeOfVolume = sizeOfVolume;
 }
 
 int SuperBlock::getNumOfEntry()
@@ -80,15 +128,45 @@ int SuperBlock::getNumOfEntry()
 	return this->numOfEntry;
 }
 
-// Trả vể chỉ số cluster đầu tiên lưu các entry
+void SuperBlock::setNumOfEntry(int value)
+{
+	this->numOfEntry = value;
+}
+
 int SuperBlock::getIndexEntryCluster()
 {
 	return indexEntryCluster;
 }
 
-// Gán chỉ số cluster đầu tiên lưu các entry
 bool SuperBlock::setIndexEntryCluster(int value)
 {
 	indexEntryCluster = value;
 	return true;
+}
+
+char* SuperBlock::getPassword()
+{
+	return password;
+}
+
+bool SuperBlock::setPassword(string password)
+{
+	int i = 0;
+	while (i < password.size()) {
+		this->password[i] = password[i];
+		i++;
+	}
+
+	while (i < 10) {
+		this->password[i] = 0;
+		i++;
+	}
+	return true;
+}
+
+void SuperBlock::setPassword(char* password)
+{
+	for (int i = 0; i < 10; i++) {
+		this->password[i] = password[i];
+	}
 }

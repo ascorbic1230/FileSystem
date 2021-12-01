@@ -13,29 +13,33 @@ private:
 	unsigned int sizeOfVolume;		// Kích thước của volume (bytes)
 	int numOfEntry;					// Số file có trong volume
 	int indexEntryCluster;			// Chỉ số cluster đầu tiên lưu các entry
+	char password[10];				// Mật khẩu của volume
 public:
 	SuperBlock();
 	SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, char numBlocksOfSuperBlock,
-		short numBlocksOfFAT, int numCluster, unsigned int sizeOfVolume, int numOfEntry, int indexEntryCluster);
-	char* getNameVolume();							// Lấy tên của volume
-	//bool setNameVolume(char* name, int size);
+		short numBlocksOfFAT, int numCluster, unsigned int sizeOfVolume, int numOfEntry, int indexEntryCluster, string password);
+	char* getNameVolume();
+	void setNameVolume(char* name);
 	short getBytesPerBlock();
-	//bool setBytesPerBlock(short value);
-
-	char getBlocksPerCluster();			// Trả về số block của một cluster
-	/*bool setBlocksPerCluster(char value);*/
+	void setBytesPerBlock(short bytesPerBlock);
+	char getBlocksPerCluster();		
+	void setBlocksPerCluster(char blocksPerCluster);
 	char getNumBlocksOfSuperBlock();
-	/*bool setNumBlocksOfSuperBlock(char value);*/
+	void setNumBlocksOfSuperBlock(char numBlocksOfSuperBlock);
 	short getNumBlocksOfFAT();
-	//bool setNumBlocksOfFAT(short value);
+	void setNumBlocksOfFAT(short numBlocksOfFAT);
 	int getNumCluster();
-	unsigned int getSizeOfVolume();		// Trả về kích thước lưu trữ của volume (bytes)
-	//bool setSizeOfVolume(unsigned int value);
-
+	void setNumCluster(int numCluster);
+	unsigned int getSizeOfVolume();
+	void setSizeOfVolume(unsigned int sizeOfVolume);
 	int getNumOfEntry();
+	void setNumOfEntry(int value);
+	int getIndexEntryCluster();				
+	bool setIndexEntryCluster(int value);	
+	char* getPassword();
+	bool setPassword(string password);
+	void setPassword(char* password);
 
-	int getIndexEntryCluster();					// Trả vể chỉ số cluster đầu tiên lưu các entry
-	bool setIndexEntryCluster(int value);		// Gán chỉ số cluster đầu tiên lưu các entry
 
 };
 
