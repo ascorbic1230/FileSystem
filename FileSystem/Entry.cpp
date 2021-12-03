@@ -2,13 +2,16 @@
 
 Entry::Entry()
 {
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		name[i] = 0;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		extension[i] = 0;
 	}
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		password[i] = 0;
 	}
 	DateTime now;
@@ -21,30 +24,36 @@ Entry::Entry()
 Entry::Entry(string name, string extension, string password, int time, int clusterIndex, int size)
 {
 	int i;
-	for (i = 0; i < name.size(); i++) {
+	for (i = 0; i < name.size(); i++)
+	{
 		this->name[i] = name[i];
 	}
 
-	while (i < 8) {
+	while (i < 8)
+	{
 		this->name[i] = 0;
 		i++;
 	}
 
-	for (i = 0; i < extension.size(); i++) {
+	for (i = 0; i < extension.size(); i++)
+	{
 		this->extension[i] = extension[i];
 	}
 
-	while (i < 4) {
+	while (i < 4)
+	{
 		this->extension[i] = 0;
 		i++;
 	}
 
 	i = 0;
-	while (i < password.size()) {
+	while (i < password.size())
+	{
 		this->password[i] = password[i];
 		i++;
 	}
-	while (i < 8) {
+	while (i < 8)
+	{
 		this->password[i] = password[i];
 		i++;
 	}
@@ -54,17 +63,17 @@ Entry::Entry(string name, string extension, string password, int time, int clust
 	this->size = size;
 }
 
-char* Entry::getName()
+char *Entry::getName()
 {
 	return name;
 }
 
-char* Entry::getExtension()
+char *Entry::getExtension()
 {
 	return extension;
 }
 
-char* Entry::getPassword()
+char *Entry::getPassword()
 {
 	return password;
 }
@@ -88,11 +97,13 @@ int Entry::getSize()
 void Entry::setPassword(string password)
 {
 	int i = 0;
-	while (i < password.size()) {
+	while (i < password.size())
+	{
 		this->password[i] = password[i];
 		i++;
 	}
-	while (i < 8) {
+	while (i < 8)
+	{
 		this->password[i] = 0;
 		i++;
 	}
@@ -106,30 +117,36 @@ bool Entry::create(string fileName, string filePassword, int clusterIndex)
 	int found = fileName.find_last_of(".");
 	name = fileName.substr(0, found);
 	int i;
-	for (i = 0; i < name.size(); i++) {
+	for (i = 0; i < name.size(); i++)
+	{
 		this->name[i] = name[i];
 	}
 
-	while (i < 8) {
+	while (i < 8)
+	{
 		this->name[i] = 0;
 		i++;
 	}
 
 	extension = fileName.substr(found + 1);
-	for (i = 0; i < extension.size(); i++) {
+	for (i = 0; i < extension.size(); i++)
+	{
 		this->extension[i] = extension[i];
 	}
 
-	while (i < 4) {
+	while (i < 4)
+	{
 		this->extension[i] = 0;
 		i++;
 	}
 	i = 0;
-	while (i < filePassword.size()) {
+	while (i < filePassword.size())
+	{
 		this->password[i] = filePassword[i];
 		i++;
 	}
-	while (i < 8) {
+	while (i < 8)
+	{
 		this->password[i] = 0;
 		i++;
 	}
@@ -138,8 +155,12 @@ bool Entry::create(string fileName, string filePassword, int clusterIndex)
 	time.getNow();
 	this->time = time.toInt();
 	this->clusterIndex = clusterIndex;
-	fstream file(fileName, ios::binary | ios::in);
-	if (file) {
+
+	string filePath = "../Input/" + fileName;
+
+	fstream file(filePath, ios::binary | ios::in);
+	if (file)
+	{
 		file.seekg(0, ios::end);
 		this->size = file.tellg();
 
@@ -150,18 +171,21 @@ bool Entry::create(string fileName, string filePassword, int clusterIndex)
 } // create
 
 // Chuyển thông tin file thành mảng char 32 bytes
-void Entry::toCharArray(char* arr)
+void Entry::toCharArray(char *arr)
 {
 	int offset = 0;
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		arr[offset] = name[i];
 		offset++;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		arr[offset] = extension[i];
 		offset++;
 	}
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		arr[offset] = password[i];
 		offset++;
 	}
@@ -191,81 +215,80 @@ bool Entry::isCorrectName(string fileName)
 	int found = fileName.find_last_of(".");
 	name = fileName.substr(0, found);
 	int i;
-	for (i = 0; i < name.size(); i++) {
+	for (i = 0; i < name.size(); i++)
+	{
 		name1[i] = name[i];
 	}
 
-	while (i < 8) {
+	while (i < 8)
+	{
 		name1[i] = 0;
 		i++;
 	}
 
 	extension = fileName.substr(found + 1);
-	for (i = 0; i < extension.size(); i++) {
+	for (i = 0; i < extension.size(); i++)
+	{
 		extension1[i] = extension[i];
 	}
 
-	while (i < 4) {
+	while (i < 4)
+	{
 		extension1[i] = 0;
 		i++;
 	}
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		if (this->name[i] != name1[i])
 			return false;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		if (this->extension[i] != extension1[i])
 			return false;
 	}
 	return true;
-}
+} // isCorrectName
 
-// Hiển thị thông tin file
-void Entry::showInfo()
+// Kiểm tra filePassword có đúng không
+bool Entry::isCorrectPassword(string filePassword)
 {
-	string fileName = "";
-	int i = 0;
-	while (i < 8 && name[i] != 0) {
-		fileName += name[i];
+	int i;
+	char password[10];
+	for (i = 0; i < filePassword.size(); i++)
+	{
+		password[i] = filePassword[i];
+	}
+	while (i < 8)
+	{
+		password[i] = 0;
 		i++;
 	}
-	fileName += ".";
-	i = 0;
-	while (i < 8 && extension[i] != 0) {
-		fileName += extension[i];
-		i++;
+	for (int j = 0; j < 8; j++)
+	{
+		if (this->password[j] != password[j])
+			return false;
 	}
-	cout << "Ten file: " << fileName << endl;
-	i = 0;
-	while (password[i] != 0) {
-		i++;
-		continue;
-	}
-	cout << "Mat khau file: ";
-	for (int j = 0; j < i; j++)
-		cout << "*";
-	cout << endl;
-	DateTime t;
-	toDateTime(t, time);
-	cout << "Thoi gian tao file: " << t << endl;
-	cout << "Cluster chua file dau tien: " << clusterIndex << endl;
-	cout << "Kich thuoc file: " << size << "(bytes)" << endl;
-} // showInfo
+	return true;
+} // isCorrectPassword
 
 // Chuyển mảng char 32 bytes thành entry
-void toEntry(char* arr, Entry& entry)
+void toEntry(char *arr, Entry &entry)
 {
 	int offset = 0;
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		entry.name[i] = arr[offset];
 		offset++;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		entry.extension[i] = arr[offset];
 		offset++;
 	}
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 8; i++)
+	{
 		entry.password[i] = arr[offset];
 		offset++;
 	}
