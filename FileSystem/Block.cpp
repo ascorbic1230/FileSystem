@@ -45,16 +45,16 @@ void Block::clear()
 
 void readBlock(string volumeName, Block& block, int index)
 {
-	volumeName += ".dat";
+	string volumePath = "../Volume/" + volumeName + ".dat";
 	// Mở volume
-	fstream volume(volumeName, ios::in | ios::binary);
+	fstream volume(volumePath, ios::in | ios::binary);
 
 	if (volume) {
 		int pos = 512 * index;
 		volume.seekg(pos, volume.beg);
 		char c;
 		for (int i = 0; i < 512; i++) {
-			volume >> c;
+			volume.read(&c, 1);
 			block.data[i] = c;
 		}
 
@@ -67,16 +67,16 @@ void readBlock(string volumeName, Block& block, int index)
 
 void writeBlock(string volumeName, Block& block, int index)
 {
-	volumeName += ".dat";
+	string volumePath = "../Volume/" + volumeName + ".dat";
 	// Mở volume
-	fstream volume(volumeName, ios::out | ios::binary);
+	fstream volume(volumePath, ios::out | ios::binary);
 	if (volume) {
 		int pos = 512 * index;
 		volume.seekp(pos, volume.beg);
 		char c;
 		for (int i = 0; i < 512; i++) {
 			c = block.data[i];
-			volume << c;
+			volume.write(&c, 1);
 		}
 
 		volume.close();

@@ -2,10 +2,12 @@
 
 SuperBlock::SuperBlock()
 {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		name[i] = 0;
 	}
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		password[i] = 0;
 	}
 	bytesPerBlock = 0;
@@ -18,25 +20,29 @@ SuperBlock::SuperBlock()
 	indexEntryCluster = 0;
 }
 
-SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, char numBlocksOfSuperBlock, short numBlocksOfFAT, int numCluster, unsigned int sizeOfVolume, int numOfEntry, int indexEntryCluster, string password)
+SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, char numBlocksOfSuperBlock, short numBlocksOfFAT, int numCluster, int sizeOfVolume, int numOfEntry, int indexEntryCluster, string password)
 {
 	int i;
-	for (i = 0; i < name.size(); i++) {
+	for (i = 0; i < name.size(); i++)
+	{
 		this->name[i] = name[i];
 	}
 
-	while (i < 10) {
+	while (i < 10)
+	{
 		this->name[i] = 0;
 		i++;
 	}
 
 	i = 0;
-	while (i < password.size()) {
+	while (i < password.size())
+	{
 		this->password[i] = password[i];
 		i++;
 	}
 
-	while (i < 10) {
+	while (i < 10)
+	{
 		this->password[i] = 0;
 		i++;
 	}
@@ -51,14 +57,15 @@ SuperBlock::SuperBlock(string name, short bytesPerBlock, char blocksPerCluster, 
 	this->indexEntryCluster = indexEntryCluster;
 }
 
-char* SuperBlock::getNameVolume()
+char *SuperBlock::getNameVolume()
 {
 	return name;
 }
 
-void SuperBlock::setNameVolume(char* name)
+void SuperBlock::setNameVolume(char *name)
 {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		this->name[i] = name[i];
 	}
 }
@@ -113,7 +120,7 @@ void SuperBlock::setNumCluster(int numCluster)
 	this->numCluster = numCluster;
 }
 
-unsigned int SuperBlock::getSizeOfVolume()
+int SuperBlock::getSizeOfVolume()
 {
 	return sizeOfVolume;
 }
@@ -144,29 +151,31 @@ bool SuperBlock::setIndexEntryCluster(int value)
 	return true;
 }
 
-char* SuperBlock::getPassword()
+char *SuperBlock::getPassword()
 {
 	return password;
 }
 
-bool SuperBlock::setPassword(string password)
+void SuperBlock::setPassword(string password)
 {
 	int i = 0;
-	while (i < password.size()) {
+	while (i < password.size())
+	{
 		this->password[i] = password[i];
 		i++;
 	}
 
-	while (i < 10) {
+	while (i < 10)
+	{
 		this->password[i] = 0;
 		i++;
 	}
-	return true;
 }
 
-void SuperBlock::setPassword(char* password)
+void SuperBlock::setPassword(char *password)
 {
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		this->password[i] = password[i];
 	}
 }
